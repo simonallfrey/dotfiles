@@ -1,4 +1,11 @@
 # re-run and capture output of last command
+
+# A simple wrapper function
+# comments output for cut and paste commands
+function sc() {
+  "$@" | sed 's/^/# /'
+}
+
 cap() {
   local quiet=0
   # parse flags: -q / --quiet
@@ -20,6 +27,7 @@ cap() {
 
 # aliases
 alias timestamp='date +"%Y%m%d%H%M"'
+alias ts='date +"%Y%m%d%H%M"'
 alias timestamp_with_seconds='date +"%Y%m%d%H%M%S"'
 alias v='nvim'
 alias g=tgpt
