@@ -41,7 +41,7 @@ main() {
 
   cd "$REPO_ROOT"
 
-  RSYNC_OPTS=(--archive --delete --human-readable)
+  RSYNC_OPTS=(--archive --delete --human-readable --exclude ".git")
 
   for pair in "${SYNC_ITEMS[@]}"; do
     IFS="|" read -r live_path repo_rel <<<"$pair"
