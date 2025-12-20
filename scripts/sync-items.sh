@@ -10,4 +10,5 @@ SYNC_ITEMS=(
   "$HOME/.config/starship.toml|config/starship.toml"
   "$HOME/.config/zellij|config/zellij"
   "$HOME/.config/nvim|config/nvim"
+  "$HOME/.config/home-manager|config/home-manager"
 )
