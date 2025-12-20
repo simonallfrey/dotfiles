@@ -75,11 +75,16 @@ bind 'set show-mode-in-prompt on'
 
 # 2. Insert Mode: Blinking Bar + Green
 # \e[5 q = Blinking Bar (use \e[1 q for Blinking Block)
-bind 'set vi-ins-mode-string \1\e[5 q\e]12;darkgreen\a\2'
+bind 'set vi-ins-mode-string \1\e[5 q\e]12;green\a\2'
 
 # 3. Command Mode: Blinking Block + Red
 # \e[1 q = Blinking Block
 bind 'set vi-cmd-mode-string \1\e[1 q\e]12;darkred\a\2'
+
+# --- RESTORE THE 'GEEZER' CLEAR ---
+# Bind Ctrl-L to clear the screen in both Vi modes
+bind -m vi-insert '"\C-l": clear-screen'
+bind -m vi-command '"\C-l": clear-screen'
 
 # Ensure Starship plays nice
 export STARSHIP_VI_MODE_INDICATOR_REPLACE=1-

@@ -1,0 +1,5 @@
+options {
+  simplified_ui true
+  pane_frames false
+}
+
