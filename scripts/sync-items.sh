@@ -9,4 +9,5 @@ SYNC_ITEMS=(
   "$HOME/.bashrc.d|bashrc.d"
   "$HOME/.config/starship.toml|config/starship.toml"
   "$HOME/.config/zellij|config/zellij"
+  "$HOME/.config/nvim|config/nvim"
 )
