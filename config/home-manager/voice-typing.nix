@@ -3,16 +3,17 @@
 {
   # Specific packages for voice-to-text
   home.packages = with pkgs; [
-    ydotool        # To inject keystrokes in Wayland
-    wtype          # Alternative wayland-native light-weight typer
-    vulkan-loader  # GPU acceleration for Whisper models
-    pipewire       # Ensure the audio stack is available
-    sonori.packages.${pkgs.system}.default
+    ydotool # To inject keystrokes in Wayland
+    wtype # Alternative wayland-native light-weight typer
+    vulkan-loader # GPU acceleration for Whisper models
+    pipewire # Ensure the audio stack is available
+    alsa-lib
   ];
 
   home.sessionVariables = {
     # REQUIRED: Tells Sonori (and ydotool client) where the daemon is listening
     YDOTOOL_SOCKET = "/run/user/1000/.ydotool_socket";
+    ALSA_PLUGIN_DIRS = "${pkgs.pipewire}/lib/alsa-lib";
   };
 
   # The background daemon required for ydotool to work
@@ -24,7 +25,9 @@
       ExecStart = "${pkgs.ydotool}/bin/ydotoold --socket-path=%t/.ydotool_socket";
       Restart = "always";
     };
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 
   # You can add voice-specific environment variables here later
