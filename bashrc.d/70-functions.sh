@@ -49,6 +49,7 @@ cap() {
 # aliases
 alias timestamp='date +"%Y%m%d%H%M"'
 alias ts='date +"%Y%m%d%H%M"'
+alias ts2='date +"%Y-%m-%d_%H.%M.%S"'
 alias timestamp_with_seconds='date +"%Y%m%d%H%M%S"'
 alias v='nvim'
 alias g=tgpt

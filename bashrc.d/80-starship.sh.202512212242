@@ -1,6 +1,5 @@
 eval "$(starship init bash)"
 
-
 reverse_pwd() {
   local pwd=$1
   local reversed=$(echo "$pwd" | tr '/' '\n' | tac | tr '\n' '/')
@@ -20,9 +19,6 @@ set_win_title_codex() {
   HN=${HN^^} # to upper case
   printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
 }
-
-  # local TITLE=$(printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})")
-alias codex='local HN=${HOSTNAME%%.*}; HN=${HN^^}; local TITLE=$(printf "%s" "HELLO"); echo $TITLE'
 
 # shell-session override for terminal background (unset => host-based)
 _TERM_BG_OVERRIDE=""
@@ -137,21 +133,8 @@ choose_term_bg() {
   done
 }
 
-# export STARSHIP_WIN_TITLE=set_win_title
-# export OLD_STARSHIP_WIN_TITLE=STARSHIP_WIN_TITLE
-#
-# alias codex='
-#  echo "backing up STARSHIP_WIN_TITLE"
-#  OLD_STARSHIP_WIN_TITLE=${STARSHIP_WIN_TITLE}
-#  echo "setting STARSHIP_WIN_TITLE"
-#  STARSHIP_WIN_TITLE=set_win_title_codex
-#  codex
-#  echo "restoring STARSHIP_WIN_TITLE"
-#  STARSHIP_WIN_TITLE=${OLD_STARSHIP_WIN_TITLE}
-# '
-
 starship_precmd_dispatch() {
-  eval "${STARSHIP_WIN_TITLE}"
+  set_win_title
   set_term_bg
 }
 
