@@ -57,6 +57,7 @@ main() {
   COMMIT_MSG="${COMMIT_MSG:-Update dotfiles $(date +%Y-%m-%d)}"
   git commit -m "$COMMIT_MSG"
   git push
+  return
 }
 
 main "$@"
