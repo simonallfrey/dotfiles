@@ -21,7 +21,7 @@ set_win_title_codex() {
   printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
 }
 
-
+  # local TITLE=$(printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})")
 
 # shell-session override for terminal background (unset => host-based)
 _TERM_BG_OVERRIDE=""
@@ -137,7 +137,7 @@ choose_term_bg() {
 }
 
 # export STARSHIP_WIN_TITLE=set_win_title
-export OLD_STARSHIP_WIN_TITLE=STARSHIP_WIN_TITLE
+# export OLD_STARSHIP_WIN_TITLE=STARSHIP_WIN_TITLE
 #
 # alias codex='
 #  echo "backing up STARSHIP_WIN_TITLE"
@@ -148,29 +148,9 @@ export OLD_STARSHIP_WIN_TITLE=STARSHIP_WIN_TITLE
 #  echo "restoring STARSHIP_WIN_TITLE"
 #  STARSHIP_WIN_TITLE=${OLD_STARSHIP_WIN_TITLE}
 # '
-#
-# alias codex-'
-#   printf '\033]0;CODEX@ \007' "${HN}" "$(reverse_pwd ${PWD})"
-#   codex
-# '
 
-# must use function here as we are overriding an exe on the path
-# with a bash function
-# otherwise we'll just end up calling codex here!
-function codex () {
-  local HN=${HOSTNAME%%.*} 
-  HN=${HN^^} # to upper case
-  printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
-  # printf '\033]0;CODEX@ \007'
-  # use the command command so we don't look in bash functions first
-  # instead look for in on the PATH
-  command codex
-}
-
-export STARSHIP_WIN_TITLE=set_win_title
 starship_precmd_dispatch() {
   eval "${STARSHIP_WIN_TITLE}"
-#  set_win_title
   set_term_bg
 }
 

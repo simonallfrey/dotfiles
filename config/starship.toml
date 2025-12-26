@@ -22,7 +22,9 @@ disabled = false
 format = "[$output]($style) "
 symbol = ""
 command = '''
-echo "$PPID" | perl -pe 's/(\d)/"\e[38;5;" . (qw(255 196 27 129 46 226 51 201 244 208)[$1]) . "m$1\e[0m"/ge'
+# echo "$PPID" | perl -pe 's/(\d)/"\e[38;5;" . (qw(255 196 27 129 46 226 51 201 244 208)[$1]) . "m$1\e[0m"/ge'
+echo $(getAncestors) | awk '{print $3, $4}' | perl -pe 's/(\d)/"\e[38;5;" . (qw(255 196 27 129 46 226 51 201 244 208)[$1]) . "m$1\e[0m"/ge'
+# echo "123456789" | perl -pe 's/(\d)/"\e[38;5;" . (qw(255 196 27 129 46 226 51 201 244 208)[$1]) . "m$1\e[0m"/ge'
 '''
 #command = 'echo -e "\e[38;5;196m1\e[0m\e[38;5;27m2\e[0m\e[38;5;129m3\e[0m\e[38;5;46m4\e[0m\e[38;5;226m5\e[0m\e[38;5;51m6\e[0m\e[38;5;201m7\e[0m\e[38;5;244m8\e[0m\e[38;5;208m9\e[0m"'
 # command = "~/.config/starship/digit_colors.sh"
