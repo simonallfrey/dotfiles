@@ -1,5 +1,5 @@
 if cmd_exists go; then
-  path_add "$(go env GOPATH)/bin"
+  path_append "$(go env GOPATH)/bin"
 fi
 
 export PATH
@@ -44,7 +44,7 @@ export NVM_DIR="$HOME/.nvm"
 export GCM_CREDENTIAL_STORE=secretservice
 #we now use starship for PROMPT_COMMAND stuff
 #export PROMPT_COMMAND='echo -ne "\033]0; $USER@$(hostname) $(basename "$PWD") \007"'
-path_add "$HOME/.local/bin"
+path_append "$HOME/.local/bin"
 
 
 

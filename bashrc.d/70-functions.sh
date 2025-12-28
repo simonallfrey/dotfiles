@@ -1,6 +1,3 @@
-# re-run and capture output of last command
-
-
 #redefine a bash function
 redef() {
     local func_name=$1
@@ -27,6 +24,7 @@ function sc() {
   "$@" | sed 's/^/# /'
 }
 
+# re-run and capture output of last command
 cap() {
   local quiet=0
   # parse flags: -q / --quiet
