@@ -2,7 +2,7 @@
 # $custom (excluding any modules already listed in `format`) is shorthand for ${custom.foo}${custom.pid}${custom.hello}
 "$schema" = "https://starship.rs/config-schema.json"
 
-format = "# ${custom.pid} $time ${custom.hello}[$all](style)$line_break# $directory \n "
+format = "# ${custom.pid} $time ${custom.hello}[$username](style)[${custom.hostname}](style)[$all](style)$line_break# $directory \n "
 right_format = ""
 continuation_prompt = "[∙](bright-black) "
 scan_timeout = 30
@@ -13,6 +13,24 @@ follow_symlinks = true
 [palettes]
 
 [profiles]
+
+[custom.hostname]
+disabled = false
+format = "[$output]($style) "
+symbol = ""
+command = '''
+echo "$TERM_HOSTNAME"
+'''
+when = "true"
+require_repo = false
+shell = []
+description = "<custom config>"
+style = "bold blue"
+detect_files = []
+detect_extensions = []
+detect_folders = []
+ignore_timeout = false
+unsafe_no_escape = false
 
 [custom.newline]
 format = "\n "
@@ -688,9 +706,7 @@ trim_at = "."
 detect_env_vars = []
 format = "[$ssh_symbol$hostname]($style) "
 style = "green dimmed bold"
-disabled = false
-
-[hostname.aliases]
+disabled = true
 
 [java]
 disabled = false

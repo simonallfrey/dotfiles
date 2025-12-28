@@ -1,5 +1,22 @@
 eval "$(starship init bash)"
 
+# Hostname Logic: User Preference > Cached File > System Default
+init_hostname() {
+    local config_file="$HOME/.config/my_hostname"
+
+    # 1. If config doesn't exist, bootstrap it with the system default
+    if [ ! -f "$config_file" ]; then
+        mkdir -p "$(dirname "$config_file")"
+        # Sanitize: output of hostname might contain newlines/spaces
+        hostname | tr -d '[:space:]' > "$config_file"
+    fi
+
+    # 2. Read the config into the environment
+    # We use a custom variable to avoid fighting the shell's auto-setting of $HOSTNAME
+    export TERM_HOSTNAME="$(<"$config_file")"
+}
+
+init_hostname
 
 reverse_pwd() {
   local pwd=$1
@@ -9,14 +26,14 @@ reverse_pwd() {
 
 set_win_title() {
   # printf '\033]0;%s@%s: %s \007' "$USER" "${HOSTNAME%%.*}" "$(reverse_pwd ${PWD})"
-  local HN=${HOSTNAME%%.*} 
+  local HN=${TERM_HOSTNAME%%.*} 
   HN=${HN^^} # to upper case
   printf '\033]0;%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
 }
 
 set_win_title_codex() {
   # printf '\033]0;%s@%s: %s \007' "$USER" "${HOSTNAME%%.*}" "$(reverse_pwd ${PWD})"
-  local HN=${HOSTNAME%%.*} 
+  local HN=${TERM_HOSTNAME%%.*} 
   HN=${HN^^} # to upper case
   printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
 }
@@ -27,7 +44,7 @@ set_win_title_codex() {
 _TERM_BG_OVERRIDE=""
 
 set_term_bg_by_host() {
-  case "${HOSTNAME}" in
+  case "${TERM_HOSTNAME}" in
     thiant)
       # pure black
       printf '\e]11;#000009\a'

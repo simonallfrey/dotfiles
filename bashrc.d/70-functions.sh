@@ -46,12 +46,32 @@ cap() {
   (( quiet == 0 )) && printf '$cap_status = %s\n' "$cap_status" >&2
 }
 
-# aliases
-alias timestamp='date +"%Y%m%d%H%M"'
-alias ts='date +"%Y%m%d%H%M"'
-alias ts2='date +"%Y-%m-%d_%H.%M.%S"'
-alias timestamp_with_seconds='date +"%Y%m%d%H%M%S"'
+# Timestamps
+ts() {
+  date +"%Y%m%d%H%M"
+}
+alias timestamp='ts'
+
+tss() {
+  date +"%Y%m%d%H%M.%S"
+}
+alias timestamp_with_seconds='tss'
+
+tsss() {
+  date +"%Y-%m-%d_%H.%M.%S"
+} 
+alias timestamp_with_seconds_and_separators=tsss
+
+tsv() {
+  date "+%Y%m%d%H%M%S %A %m %B %Y %H:%M and %S seconds (%Z = UTC %z)"
+} 
+alias timestamp_verbose=tsv
+
+
+# other aliases
+alias bat='batcat'
 alias v='nvim'
+alias sv='sudoedit'
 alias g=tgpt
 alias lan-mouse='/usr/local/bin/lan-mouse'
 alias bashtrace="BASH_XTRACEFD=7 PS4='+ ${BASH_SOURCE}:${LINENO}: ' bash -xlc 'exit' 7>/tmp/bash-startup.log; less /tmp/bash-startup.log"

@@ -25,5 +25,9 @@ vim.opt.foldmethod = 'manual'
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99
 
+-- use login shell for running commands, makes user functions available.
+vim.opt.shell = 'bash'
+vim.opt.shellcmdflag = '-lc' -- login shell: reads ~/.bash_profile (etc)
+
 -- Required to fix Lazy import error
 return {}
