@@ -1,0 +1,21 @@
+#!/bin/bash 
+
+# re-run and capture output of last command
+
+local quiet=0
+# parse flags: -q / --quiet
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -q|--quiet) quiet=1; shift ;;
+    *) break ;;
+  esac
+done
+
+local cmd
+cmd=$(fc -ln -1) || return 1   # get previous command text
+(( quiet == 0 )) && printf 'Re-running: %s\n' "$cmd" >&2
+out=$({ eval "$cmd"; } 2>&1)   # capture stdout+stderr
+(( quiet == 0 )) && printf '$out = %s\n' "$out" >&2
+cap_status=$?                         # exit code
+(( quiet == 0 )) && printf '$cap_status = %s\n' "$cap_status" >&2
+
