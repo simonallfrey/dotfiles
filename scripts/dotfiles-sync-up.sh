@@ -39,7 +39,7 @@ main() {
   require_command git
   require_command rsync
 
-  cd "$REPO_ROOT"
+  pushd "$REPO_ROOT"
 
   RSYNC_OPTS=(--archive --delete --human-readable --exclude ".git")
 
@@ -57,6 +57,7 @@ main() {
   COMMIT_MSG="${COMMIT_MSG:-Update dotfiles $(date +%Y-%m-%d)}"
   git commit -m "$COMMIT_MSG"
   git push
+  popd
   return
 }
 
