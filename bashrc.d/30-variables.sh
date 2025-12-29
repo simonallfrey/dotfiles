@@ -2,11 +2,9 @@ if cmd_exists go; then
   path_append "$(go env GOPATH)/bin"
 fi
 
-export PATH
-
 editor_set=""
-if [ -n "$EDITOR" ]; then
-  if [[ "$EDITOR" = /* ]]; then
+if [ -n "$EDITOR" ]; then #EDITOR is non-zero length
+  if [[ "$EDITOR" = /* ]]; then 
     if [ -x "$EDITOR" ]; then
       editor_set="$EDITOR"
     fi
