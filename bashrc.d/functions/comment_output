@@ -1,5 +1,0 @@
-#!/usr/bin/env bash 
-
-# A simple wrapper function
-# comments output for cut and paste commands
-"$@" | sed 's/^/# /'

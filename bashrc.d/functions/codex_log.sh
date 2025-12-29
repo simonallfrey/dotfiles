@@ -1,23 +1,24 @@
-#!/usr/bin/env bash
+# $HOME/.bashrc.d/functions/codex_log.sh
 
-local follow=0 out=
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    -f|--follow) follow=1; shift ;;
-    -o|--out) out=$2; shift 2 ;;
-    *) break ;;
-  esac
-done
-
-local dir="$HOME/.codex/sessions" file
-shopt -s globstar nullglob
-local logs=("$dir"/**/*.jsonl)
-shopt -u globstar nullglob
-(( ${#logs[@]} )) || { echo "No codex session logs in $dir" >&2; return 1; }
-
+codex_log() {
+  local follow=0 out=
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -f|--follow) follow=1; shift ;;
+      -o|--out) out=$2; shift 2 ;;
+      *) break ;;
+    esac
+  done
+  
+  local dir="$HOME/.codex/sessions" file
+  shopt -s globstar nullglob
+  local logs=("$dir"/**/*.jsonl)
+  shopt -u globstar nullglob
+  (( ${#logs[@]} )) || { echo "No codex session logs in $dir" >&2; return 1; }
+  
   IFS=$'\n' logs=($(printf '%s\n' "${logs[@]}" | sort -r))
   local total=${#logs[@]} sel=0 window=5 key
-
+  
     draw_menu() {
       tput clear
       echo "Select codex log (j/down, k/up, Enter open, q quit)"
@@ -30,7 +31,7 @@ shopt -u globstar nullglob
         printf "%s %3d %s\n" $([[ $i == $sel ]] && echo ">" || echo " ") $((i+1)) "${logs[i]}"
       done
     }
-
+  
   draw_menu
   while IFS= read -rsn1 key; do
     case "$key" in
@@ -41,11 +42,11 @@ shopt -u globstar nullglob
     esac
     draw_menu
   done
-
+  
   file=${logs[sel]}
   tput clear
   printf 'Opening: %s\n\n' "$file"
-
+  
   local filter='
   select(
     (.type=="event_msg" and .payload.type=="agent_message") or
@@ -55,7 +56,7 @@ shopt -u globstar nullglob
   text:(.payload.message // (.payload.content[]?.text // empty))}
   | "\(.ts) [\(.role)]:\n\(.text)\n\n-----\n"
   '
-
+  
   if (( follow )); then
     # stream existing content, then follow updates (unbuffered)
     if [[ -n "$out" ]]; then
@@ -70,4 +71,4 @@ shopt -u globstar nullglob
       jq -r "$filter" "$file"
     fi
   fi
-
+}

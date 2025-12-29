@@ -1,6 +1,5 @@
 alias pp='path_prepend' 
 alias pa='path_append'   
-alias path_add='path_append'
 alias sc='comment_output'
 alias redef='redefine_bash_function'
 alias cap='rerun_capture_last_command'

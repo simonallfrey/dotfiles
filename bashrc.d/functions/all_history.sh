@@ -1,5 +1,7 @@
-#!/usr/bin/env python3
+# integrated of bash_history of all previous sessions
 
+all_history() {
+  python3 - <<'PY'
 import pathlib, re, time, sys
 
 histdir = pathlib.Path.home() / ".bash_history.d"
@@ -46,4 +48,5 @@ for t, pid, cmd in entries:
         sys.stdout.write(f"\n=== pid {pid} ===\n")
         last_pid = pid
     sys.stdout.write(f"{t} [{pid}] {cmd}\n")
-
+PY
+}

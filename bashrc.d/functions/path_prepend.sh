@@ -1,0 +1,16 @@
+# $HOME/.bashrc.d/functions/path_prepend.sh
+
+path_prepend() {
+  [ -z "$1" ] && return 1             # Fail on empty arg
+  local dir="${1%/}"                  # Normalize: strip trailing slash
+  [ -d "$dir" ] || return 1           # Fail if dir doesn't exist
+  # 1. Wrap PATH in colons for safe matching
+  local p=":$PATH:"
+  # 2. Remove all existing instances of the dir
+  p="${p//:$dir:/:}"
+  # 3. Clean up leading/trailing colons
+  p="${p#:}"
+  p="${p%:}"
+  # 4. Prepend safely (handles empty PATH edge case)
+  export PATH="${dir}${p:+:$p}"
+}

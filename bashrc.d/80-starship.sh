@@ -1,72 +1,13 @@
+# Ensure Starship plays nice
+
+export STARSHIP_VI_MODE_INDICATOR_REPLACE=1-
+
 eval "$(starship init bash)"
-
-# Hostname Logic: User Preference > Cached File > System Default
-init_hostname() {
-    local config_file="$HOME/.config/my_hostname"
-
-    # 1. If config doesn't exist, bootstrap it with the system default
-    if [ ! -f "$config_file" ]; then
-        mkdir -p "$(dirname "$config_file")"
-        # Sanitize: output of hostname might contain newlines/spaces
-        hostname | tr -d '[:space:]' > "$config_file"
-    fi
-
-    # 2. Read the config into the environment
-    # We use a custom variable to avoid fighting the shell's auto-setting of $HOSTNAME
-    export TERM_HOSTNAME="$(<"$config_file")"
-}
 
 init_hostname
 
-reverse_pwd() {
-  local pwd=$1
-  local reversed=$(echo "$pwd" | tr '/' '\n' | tac | tr '\n' '/')
-  echo "${reversed%/}"
- }
-
-set_win_title() {
-  # printf '\033]0;%s@%s: %s \007' "$USER" "${HOSTNAME%%.*}" "$(reverse_pwd ${PWD})"
-  local HN=${TERM_HOSTNAME%%.*} 
-  HN=${HN^^} # to upper case
-  printf '\033]0;%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
-}
-
-set_win_title_codex() {
-  # printf '\033]0;%s@%s: %s \007' "$USER" "${HOSTNAME%%.*}" "$(reverse_pwd ${PWD})"
-  local HN=${TERM_HOSTNAME%%.*} 
-  HN=${HN^^} # to upper case
-  printf '\033]0;CODEX@%s %s \007' "${HN}" "$(reverse_pwd ${PWD})"
-}
-
-
-
 # shell-session override for terminal background (unset => host-based)
 _TERM_BG_OVERRIDE=""
-
-set_term_bg_by_host() {
-  case "${TERM_HOSTNAME}" in
-    thiant)
-      # pure black
-      printf '\e]11;#000009\a'
-      ;;
-    s-Precision-Tower-7810)
-      # very dark red (calm, not glaring)
-      printf '\e]11;#000900\a'
-      ;;
-    *)
-      # reset to GNOME Terminal profile default
-      printf '\e]111\a'
-      ;;
-  esac
-}
-
-set_term_bg() {
-  if [[ -n "$_TERM_BG_OVERRIDE" ]]; then
-    printf '\e]11;%s\a' "$_TERM_BG_OVERRIDE"
-  else
-    set_term_bg_by_host
-  fi
-}
 
 choose_term_bg() {
   local color channel="r" step=1 key r g b orig
@@ -90,67 +31,67 @@ choose_term_bg() {
     printf '\e]11;%s\a' "$color"
   }
 
-  parse_rgb
-  apply_color
+parse_rgb
+apply_color
 
-  echo "Adjust background: r/g/b to select channel, j/k to -/+ $step, Enter accept, q to cancel, host to reset."
+echo "Adjust background: r/g/b to select channel, j/k to -/+ $step, Enter accept, q to cancel, host to reset."
 
-  while true; do
-    printf '\r\033[K[%s] %s > ' "$channel" "$color"
-    IFS= read -rsn1 key || break
+while true; do
+  printf '\r\033[K[%s] %s > ' "$channel" "$color"
+  IFS= read -rsn1 key || break
 
-    # Enter accepts
-    if [[ -z "$key" ]]; then
-      _TERM_BG_OVERRIDE="$color"
+  # Enter accepts
+  if [[ -z "$key" ]]; then
+    _TERM_BG_OVERRIDE="$color"
+    echo
+    return 0
+  fi
+
+  case "$key" in
+    q)
+      color="$orig"
+      _TERM_BG_OVERRIDE="$orig"
+      apply_color
       echo
-      return 0
-    fi
-
-    case "$key" in
-      q)
-        color="$orig"
-        _TERM_BG_OVERRIDE="$orig"
-        apply_color
+      return 1
+      ;;
+    r|g|b)
+      channel="$key"
+      ;;
+    j|k)
+      parse_rgb
+      case "$channel" in
+        r) if [[ "$key" == "j" ]]; then (( r-=step )); else (( r+=step )); fi ;;
+        g) if [[ "$key" == "j" ]]; then (( g-=step )); else (( g+=step )); fi ;;
+        b) if [[ "$key" == "j" ]]; then (( b-=step )); else (( b+=step )); fi ;;
+      esac
+      (( r<0 )) && r=0; (( r>255 )) && r=255
+      (( g<0 )) && g=0; (( g>255 )) && g=255
+      (( b<0 )) && b=0; (( b>255 )) && b=255
+      rebuild_color
+      apply_color
+      printf '\r'
+      ;;
+    h)
+      echo "Commands: r/g/b select channel, j dec, k inc, Enter accept, q cancel, type 'host' to reset."
+      ;;
+    *)
+      # allow typing 'host' quickly
+      if [[ "$key" == "h" ]]; then
+        :
+      fi
+      # read rest of line to see if user typed 'host'
+      IFS= read -rs line
+      line="$key$line"
+      if [[ "$line" == "host" ]]; then
+        _TERM_BG_OVERRIDE=""
+        set_term_bg_by_host
         echo
-        return 1
-        ;;
-      r|g|b)
-        channel="$key"
-        ;;
-      j|k)
-        parse_rgb
-        case "$channel" in
-          r) if [[ "$key" == "j" ]]; then (( r-=step )); else (( r+=step )); fi ;;
-          g) if [[ "$key" == "j" ]]; then (( g-=step )); else (( g+=step )); fi ;;
-          b) if [[ "$key" == "j" ]]; then (( b-=step )); else (( b+=step )); fi ;;
-        esac
-        (( r<0 )) && r=0; (( r>255 )) && r=255
-        (( g<0 )) && g=0; (( g>255 )) && g=255
-        (( b<0 )) && b=0; (( b>255 )) && b=255
-        rebuild_color
-        apply_color
-        printf '\r'
-        ;;
-      h)
-        echo "Commands: r/g/b select channel, j dec, k inc, Enter accept, q cancel, type 'host' to reset."
-        ;;
-      *)
-        # allow typing 'host' quickly
-        if [[ "$key" == "h" ]]; then
-          :
-        fi
-        # read rest of line to see if user typed 'host'
-        IFS= read -rs line
-        line="$key$line"
-        if [[ "$line" == "host" ]]; then
-          _TERM_BG_OVERRIDE=""
-          set_term_bg_by_host
-          echo
-          return 0
-        fi
-        ;;
-    esac
-  done
+        return 0
+      fi
+      ;;
+  esac
+done
 }
 
 # export STARSHIP_WIN_TITLE=set_win_title

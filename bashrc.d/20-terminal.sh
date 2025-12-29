@@ -1,4 +1,4 @@
-if [[ $- == *i* ]]; then
+if [[ $- == *i* ]]; then # we are in an interactive shell
   # set -o emacs
   # --- Zshy Vi-Insert Setup ---
   set -o vi
@@ -69,8 +69,6 @@ if [[ $- == *i* ]]; then
     bind -m vi-insert '"\C-l": clear-screen'
     bind -m vi-command '"\C-l": clear-screen'
 
-    # Ensure Starship plays nice
-    export STARSHIP_VI_MODE_INDICATOR_REPLACE=1-
 
     # --- replace menu-complete with fzf ---
     if cmd_exists fzf; then
