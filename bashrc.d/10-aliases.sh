@@ -12,13 +12,15 @@ alias tss='time_stamp_with_seconds'
 alias ts='time_stamp'
 alias tsv='time_stamp_verbose'
 
-# $HOME/.local/bin
 
 # $HOME/bin
 
+# $HOME/.local/bin
+
+
 # elsewhere
 alias bashtrace="BASH_XTRACEFD=7 PS4='+ $:${LINENO}: ' bash -xlc 'exit' 7>/tmp/bash-startup.log; less /tmp/bash-startup.log"
-alias bat='batcat'
+command -v batcat >/dev/null && alias bat='batcat' # some call it batcat, some call it bat...
 alias g=tgpt
 alias lan-mouse='/usr/local/bin/lan-mouse'
 alias sv='sudoedit'
