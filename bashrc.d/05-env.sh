@@ -17,7 +17,7 @@ fi
 
 # --- Paths ---
 path_append "$HOME/bin"
-path_append "$HOME/.local/bin"
+path_append -m "$HOME/.local/bin" # move it to the bottom of the list
 [ -d "$HOME/.cargo/bin" ] && path_append "$HOME/.cargo/bin"
 if cmd_exists go; then path_append "$(go env GOPATH)/bin"; fi
 
