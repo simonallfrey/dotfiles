@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# --- HACK 1: PRINT EVERY COMMAND (Trace mode) ---
+set -x
+
+# --- HACK 2: GLOBAL PAUSE ON EXIT (Keeps terminal open) ---
+trap 'set +x; echo -e "\n\n==> Done. Press Enter to close terminal."; read' EXIT
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 source "$SCRIPT_DIR/sync-items.sh"
@@ -61,5 +67,4 @@ main() {
   return
 }
 
-main "$@"
-return
+main "$@"ain "$@"
