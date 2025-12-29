@@ -1,6 +1,11 @@
 # ~/.bashrc.d/05-env.sh
 
-# --- Editor (Prioritize nvim) ---
+## Scrub inherited PATH before we start adding our own
+if type path_dedup >/dev/null 2>&1; then
+    path_dedup
+fi
+
+#  --- Editor (Prioritize nvim) ---
 if [ -z "$FINAL_EDITOR" ]; then
   if cmd_exists nvim; then FINAL_EDITOR="nvim"
   elif [ -n "$EDITOR" ]; then FINAL_EDITOR="$EDITOR"
