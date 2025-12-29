@@ -2,12 +2,18 @@
 
 redefine_bash_function() {
   local func_name=$1
-  local tmp_file=$(mktemp)
+  # Verify function exists
+  if ! declare -F "$func_name" > /dev/null; then
+      echo "Error: Function '$func_name' is not defined."
+      return 1
+  fi
 
+  local tmp_file=$(mktemp)
+  
   # 1. Dump the function definition to a temp file
   declare -f "$func_name" > "$tmp_file"
 
-  # 2. Open in nvim
+  # 2. Open in nvim (User Preference)
   nvim "$tmp_file"
 
   # 3. Source the modified file back into the current shell
