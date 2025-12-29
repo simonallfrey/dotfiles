@@ -6,7 +6,7 @@ init_history() {
   mkdir -p "$histdir"
 
   # per-shell history file: YYYYmmdd-HHMMSS.$PID.hist
-  ts=$(date +%Y%m%d-%H%M%S)
+  ts=$(date +%Y%m%d-%H%M%S%z)
   export HISTFILE="$histdir/${ts}.$$.hist"
 
   # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
