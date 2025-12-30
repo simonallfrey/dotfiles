@@ -22,6 +22,7 @@ alias tsv='time_stamp_verbose'
 alias bashtrace="BASH_XTRACEFD=7 PS4='+ $:${LINENO}: ' bash -xlc 'exit' 7>/tmp/bash-startup.log; less /tmp/bash-startup.log"
 command -v batcat >/dev/null && alias bat='batcat' # some call it batcat, some call it bat...
 alias g=tgpt
+alias hg="tgpt<<'eof'"
 alias lan-mouse='/usr/local/bin/lan-mouse'
 alias sv='sudoedit'
 alias v='nvim'
