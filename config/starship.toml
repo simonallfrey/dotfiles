@@ -119,9 +119,9 @@ disabled = true
 # empty_symbol = "󰂎 "
 # format = "[$symbol$percentage]($style) "
 
-[[battery.display]]
-threshold = 10
-style = "red bold"
+# [[battery.display]]
+# threshold = 10
+# style = "red bold"
 
 [buf]
 format = "with [$symbol($version )]($style)"
