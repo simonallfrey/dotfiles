@@ -23,7 +23,8 @@ alias bashtrace="BASH_XTRACEFD=7 PS4='+ $:${LINENO}: ' bash -xlc 'exit' 7>/tmp/b
 command -v batcat >/dev/null && alias bat='batcat' # some call it batcat, some call it bat...
 alias g=tgpt
 alias hg="tgpt<<'eof'"
-alias ir="ip route | awk '{dest=\$1; gw=\"-\"; if(\$2==\"via\") gw=\$3; dev=\"-\"; for(i=1;i<=NF;i++) if(\$i==\"dev\") dev=\$(i+1); met=\"-\"; for(i=1;i<=NF;i++) if(\$i==\"metric\") met=\$(i+1); printf \"%-20s %-15s %-10s %-6s\n\", dest, gw, dev, met}' | column -t"
+#alias ir="ip route | awk '{dest=\$1; gw=\"-\"; if(\$2==\"via\") gw=\$3; dev=\"-\"; for(i=1;i<=NF;i++) if(\$i==\"dev\") dev=\$(i+1); met=\"-\"; for(i=1;i<=NF;i++) if(\$i==\"metric\") met=\$(i+1); printf \"%-20s %-15s %-10s %-6s\n\", dest, gw, dev, met}' | column -t"
+alias ir="ip route | perl -lane '(\$g) = /via (\S+)/; (\$v) = /dev (\S+)/; (\$m) = /metric (\S+)/; printf \"%-18s %-15s %-10s %s\n\", \$F[0], \$g//\"-\", \$v//\"-\", \$m//\"-\"' | column -t"
 alias lan-mouse='/usr/local/bin/lan-mouse'
 alias sv='sudoedit'
 alias v='nvim'
