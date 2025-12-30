@@ -111,12 +111,12 @@ disabled = true
 [azure.subscription_aliases]
 
 [battery]
+disabled = true
 full_symbol = "󰁹 "
 charging_symbol = "󰂄 "
 discharging_symbol = "󰂃 "
 unknown_symbol = "󰁽 "
 empty_symbol = "󰂎 "
-disabled = false
 format = "[$symbol$percentage]($style) "
 
 [[battery.display]]
