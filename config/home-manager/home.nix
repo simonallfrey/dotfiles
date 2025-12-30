@@ -49,6 +49,8 @@
   ];
   programs.home-manager.enable = true;
 
+  programs.nix-index.enable = true;
+
   programs.bash = {
     # enabling this will have nix overwrite existing .bashrc .profile (etc?)
     enable = false;
