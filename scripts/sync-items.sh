@@ -5,10 +5,11 @@
 #   /absolute/live/path|relative/path/inside/repo
 # Extend this list when new dotfiles are added.
 SYNC_ITEMS=(
-  "$HOME/.config/home-manager|config/home-manager"
   "$HOME/.bashrc|bashrc"
   "$HOME/.bashrc.d|bashrc.d"
+  "$HOME/.config/nvim|config/nvim"
+  "$HOME/.config/home-manager|config/home-manager"
   "$HOME/.config/starship.toml|config/starship.toml"
   "$HOME/.config/zellij|config/zellij"
-  "$HOME/.config/nvim|config/nvim"
+  # binaries need to be specific to x86_64 (thiant) or aarch64 (s25u)
 )
