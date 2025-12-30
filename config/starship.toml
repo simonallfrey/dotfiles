@@ -112,12 +112,12 @@ disabled = true
 
 [battery]
 disabled = true
-full_symbol = "󰁹 "
-charging_symbol = "󰂄 "
-discharging_symbol = "󰂃 "
-unknown_symbol = "󰁽 "
-empty_symbol = "󰂎 "
-format = "[$symbol$percentage]($style) "
+# full_symbol = "󰁹 "
+# charging_symbol = "󰂄 "
+# discharging_symbol = "󰂃 "
+# unknown_symbol = "󰁽 "
+# empty_symbol = "󰂎 "
+# format = "[$symbol$percentage]($style) "
 
 [[battery.display]]
 threshold = 10
