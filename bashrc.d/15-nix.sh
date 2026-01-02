@@ -1,4 +1,4 @@
-# ~/.bashrc.d/10-nix.sh
+# ~/.bashrc.d/15-nix.sh
 
 # 1. Source the main Nix profile
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then

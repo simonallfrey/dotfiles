@@ -7,3 +7,4 @@ done
 host=$(hostname -s)
 [ -r ~/.bashrc.d/host/$host.sh ] && . ~/.bashrc.d/host/$host.sh
 [ -r ~/.bashrc.d/work.sh ] && . ~/.bashrc.d/work.sh  # optional per-context
+
