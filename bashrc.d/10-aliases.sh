@@ -19,6 +19,7 @@ alias tsv='time_stamp_verbose'
 
 
 # elsewhere
+alias garden-deploy='cd ~/Scratch/ObsidianQuartz && npx quartz build && rsync -avz --delete public/ s@hench.ergatesthiant.top:/var/www/notes/'
 alias bashtrace="BASH_XTRACEFD=7 PS4='+ $:${LINENO}: ' bash -xlc 'exit' 7>/tmp/bash-startup.log; less /tmp/bash-startup.log"
 command -v batcat >/dev/null && alias bat='batcat' # some call it batcat, some call it bat...
 # Force the S25U to behave and the PC to grab the link
