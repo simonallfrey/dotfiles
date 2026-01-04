@@ -23,6 +23,7 @@ alias bashtrace="BASH_XTRACEFD=7 PS4='+ $:${LINENO}: ' bash -xlc 'exit' 7>/tmp/b
 command -v batcat >/dev/null && alias bat='batcat' # some call it batcat, some call it bat...
 # Force the S25U to behave and the PC to grab the link
 alias s25ux='/home/s/Code/scrcpy/scrcpy-linux-x86_64-v3.3.4/scrcpy --disable-screensaver --stay-awake --turn-screen-off --power-off-on-close'
+alias wire='adb shell svc usb setFunctions rndis; nmcli device connect s25u0; ir'
 alias fix-wire='
   adb shell svc usb setFunctions rndis; 
   sleep 1.2; 
