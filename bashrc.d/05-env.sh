@@ -6,14 +6,19 @@ if type path_dedup >/dev/null 2>&1; then
 fi
 
 #  --- Editor (Prioritize nvim) ---
-if [ -z "$FINAL_EDITOR" ]; then
-  if cmd_exists nvim; then FINAL_EDITOR="nvim"
-  elif [ -n "$EDITOR" ]; then FINAL_EDITOR="$EDITOR"
-  else FINAL_EDITOR="vi"; fi
+any_empty "$FINAL_EDITOR" "$VISUAL" "$EDITOR" "$SUDO_EDITOR" && {
+  if cmd_exists nvim; then 
+    FINAL_EDITOR="nvim"
+  elif [ -n "$EDITOR" ]; then 
+    FINAL_EDITOR="$EDITOR"
+  else 
+    FINAL_EDITOR="vi";
+  fi
   export FINAL_EDITOR
   export EDITOR="$FINAL_EDITOR"
+  export SUDO_EDITOR="$FINAL_EDITOR"
   export VISUAL="$FINAL_EDITOR"
-fi
+}
 
 # --- Paths ---
 path_append "$HOME/bin"
@@ -26,4 +31,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
 
+export NNN_OPTS="Hdae"
+
+#SJA fix below
 export GCM_CREDENTIAL_STORE=secretservice

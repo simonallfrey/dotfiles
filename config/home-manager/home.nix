@@ -22,6 +22,7 @@
     fd
     dua
     gdu
+    nnn
     fdupes
     nix-index
     nix-search-cli
