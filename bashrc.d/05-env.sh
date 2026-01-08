@@ -56,3 +56,5 @@ export EDGE_USER_DATA_DIR="$XDG_DATA_HOME/microsoft-edge"
 # Note: Code is stubborn, so we point it to DATA_HOME
 export VSCODE_APPDATA="$XDG_DATA_HOME/vscode-data"
 export VSCODE_LOGS="$HOME/.local/share/vscode-logs"
+
+export LESS="-i -R"

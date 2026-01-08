@@ -28,6 +28,15 @@ return {
           end,
         },
       },
+
+      terminal_scrollback = {
+        {
+          event = "TermOpen",
+          pattern = "*",
+          desc = "Set terminal scrollback to unlimited",
+          callback = function() vim.opt_local.scrollback = -1 end,
+        },
+      },
     },
     -- Configure core features of AstroNvim
     features = {
@@ -59,11 +68,18 @@ return {
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
-        -- Use the user's current shell or default to zsh
-        shell = os.getenv("SHELL") or "zsh",
-        -- Use -l to make it a login shell (picks up aliases/functions)
-        -- and -c for command execution
+        -- Use bash with login shell semantics (picks up aliases/functions)
+        shell = "bash",
+        -- Use -l to make it a login shell and -c for command execution
         shellcmdflag = "-lc",
+        expandtab = true,
+        shiftwidth = 2,
+        tabstop = 2,
+        softtabstop = 2,
+        smartindent = true,
+        foldmethod = "manual",
+        foldenable = true,
+        foldlevelstart = 99,
         relativenumber = true, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
@@ -96,6 +112,8 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
+        ["<Leader>n"] = { ":v//fold<CR>zM", desc = "Narrow: fold non-matches" },
+        ["<Leader>N"] = { "zR", desc = "Restore: open all folds" },
 
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
