@@ -12,4 +12,5 @@ SYNC_ITEMS=(
   "$HOME/.config/starship.toml|config/starship.toml"
   "$HOME/.config/zellij|config/zellij"
   # binaries need to be specific to x86_64 (thiant) or aarch64 (s25u)
+  "$HOME/.local/bin/hms"
 )
